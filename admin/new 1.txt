@@ -1,0 +1,239 @@
+
+<div class="col-sm-4">
+
+
+		<div class="container-fluid">
+				<div class="carousel slide" id="carousel" data-ride="carousel">
+					    <ol class="carousel-indicators">
+					    	<li  data-target="#carousel" data-slide-to="0" class="active"></li>
+					    	<li  data-target="#carousel" data-slide-to="1"></li>
+							<li  data-target="#carousel" data-slide-to="2"></li>
+					   
+					    </ol>
+						<div class="carousel-inner">
+								<div class="item active">
+										<img src="http://127.0.0.1/matrimonial/z.jpg" style="width:200px; height:200px" class="img-responsive">
+								</div>
+								<div class="item">
+										<img src="http://127.0.0.1/matrimonial/x.jpg" style="width:200px; height:200px" class="img-responsive">
+								</div>
+								
+								<div class="item">
+										<img src="http://127.0.0.1/matrimonial/c.jpg" style="width:200px; height:200px"class="img-responsive">
+								</div>
+								
+								
+						</div>
+				</div>
+
+		</div><br>
+		
+		
+</div>
+
+
+
+
+$email=$_POST["email"];
+		mysql_connect("localhost","root","");
+		mysql_select_db("matrimonialdb");
+		$rs=mysql_query("select * from matri where email='$email'");
+	 if($r=mysql_fetch_array($rs)){
+		 header("location:home.php?invelid");
+	 }
+
+
+
+<div class="col-sm-4">
+
+		<div class="container-fluid">
+				<div class="carousel slide" id="carousel" data-ride="carousel">
+					    <ol class="carousel-indicators">
+					    	<li  data-target="#carousel" data-slide-to="0" class="active"></li>
+					    	<li  data-target="#carousel" data-slide-to="1"></li>
+							<li  data-target="#carousel" data-slide-to="2"></li>
+					   
+					    </ol>
+						<div class="carousel-inner">
+								<div class="item active">
+										<img src="http://127.0.0.1/matrimonial/pic1.jpg" class="img-responsive">
+								</div>
+								<div class="item">
+										<img src="http://127.0.0.1/matrimonial/pic2.jpg" class="img-responsive">
+								</div>
+								
+								<div class="item">
+										<img src="http://127.0.0.1/matrimonial/e.jpg" class="img-responsive">
+								</div>
+								
+								
+						</div>
+				</div>
+
+		</div>
+</div>
+
+
+
+
+
+
+
+
+
+		
+		
+		<?php
+if(!isset($_COOKIE["user"])){
+	header("location:home.php");
+}
+else{
+	$email=$_COOKIE["user"];
+			mysql_connect("localhost","root","");
+		mysql_select_db("matrimonialdb");
+		$rs=mysql_query("select * from reg where email='$email'");
+		if($r=mysql_fetch_array($rs)){
+			
+	?>
+	
+	
+	
+	
+	
+	<?php
+		}
+}
+?>
+
+
+
+
+upload/'<?php echo $email; ?>.'
+
+
+
+!!!!imp!!!!!
+		
+if(isset($_GET["code"])){	
+
+$code=$_GET["code"];
+		
+	mysql_connect("localhost","root","");
+	mysql_select_db("overflow");
+	$rs=mysql_query("select * from cat where code='$code'");
+	if($r=mysql_fetch_array($rs)){
+		
+} 
+		
+}
+
+
+
+
+?code=$code
+
+!!!!!!!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php
+if(!isset($_COOKIE["user"])){
+	header("location:login.php");
+}
+else{
+	
+			mysql_connect("localhost","root","");
+		mysql_select_db("overflow");
+	
+		$code=$_POST["code"];
+		
+
+		
+	mysql_connect("localhost","root","");
+	mysql_select_db("overflow");
+	$rs=mysql_query("select * from cat where code='$code'");
+	if($r=mysql_fetch_array($rs)){
+
+			
+	?>
+			
+			<form method="post" action="update.php">
+			
+ 								<input type="hidden" name="code" value="<?php echo $r[1] ; ?>" >
+<br><input type="text" class="form-control" name="cat" value=<?php echo $r[2];?>>
+				
+		<Button>save</Button></form>
+					
+		<?php
+		
+}
+}
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php
+if(empty($_POST["name"])){
+	header("location:user.php");
+
+}
+else{
+		$name=$_POST["name"];
+			mysql_connect("localhost","root","");
+		mysql_select_db("overflow");
+		$rs=mysql_query("select * from user where name='$name'");
+		while($r=mysql_fetch_array($rs)){
+			
+	?>
+	
+	
+	
+		
+
+<img src="<?php echo "upload/".$r[3].".jpg"; ?>" style="width: 30px; height: 30px; margin-left:85px" class="img-responsive img-circle">
+		<table class="table table-responsive">
+					<tr><td>Name</td><td><?php echo $r[1]; ?></td></tr>
+					<tr><td>phone number</td><td><?php echo $r[2]; ?></td></tr>
+					<tr><td>email</td><td><?php echo $r[3]; ?></td></tr>
+		</table>
+		<a href="fullprofile.php?email=<?php echo $r[3]; ?>" class="btn btn-warning">view Profile</a><br><br>
+		<?php
+		}
+		
+		
+		
+}
+?>

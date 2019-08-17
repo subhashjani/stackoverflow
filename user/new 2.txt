@@ -1,0 +1,668 @@
+<html>
+
+	<head>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+		<link rel="stylesheet" href="bootstrap.min.css">
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+	body {
+  margin: 0;
+  font-family: "Lato", sans-serif;
+}
+
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
+ 
+.sidebar a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.sidebar a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+
+div.content {
+  margin-left: 200px;
+  padding: 1px 16px;
+  height: 1000px;
+}
+
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {float: left;}
+  div.content {margin-left: 0;}
+}
+
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
+</style>
+
+</head>
+	
+
+<body>
+
+<nav class="navbar navbar-inverse" style="background-color:black ; opacity:0.8">
+<div class="container-fluid">
+<div class="navbar-header" >
+	<a  class="navbar-brand" href="stgflow.php" style="float: left ; color:white">stgflow.com</a>
+	
+</div>
+ <ul class="nav navbar-nav">
+        <li class="active"  style="color:white"><a href="home.php">home</a></li>
+
+      </ul>
+<ul class="nav navbar-nav navbar-right">
+	<li><a href="reg.php" style="color:white" > registration</a></li>
+	<li><a href="login.php" style="color:white" > login</a></li>
+	
+	
+	</ul>
+	</div>
+	
+</nav>
+
+<div class="sidebar">
+
+  <a class="active" href="home.php">all Questions</a>
+  
+  
+  <a href="topq.php">top Questions</a>
+  <?php
+
+	mysql_connect("localhost","root","");
+	mysql_select_db("overflow");
+
+	$rs=mysql_query("select * from cat where status=0");
+	
+while($r=mysql_fetch_array($rs)){
+?>
+<a href="c.php?cat=<?php echo $r[2] ; ?>" ><?php echo $r[2] ; ?></a>
+<?php
+	}
+?>
+</div>
+
+<div class="container-fluid">
+
+<div class="row">
+<div class="col-sm-2">					    
+
+</div>
+
+<div class="col-sm-8">
+<form method="post" action="search1.php">
+<table  class="table table-responsive"><tr>
+<td><input type="text" class="form-control" name="que" placeholder="search question"></td><td><a class=" glyphicon glyphicon-search"></a></td></tr></table>
+</form>
+
+	
+
+<?php
+
+	mysql_connect("localhost","root","");
+	mysql_select_db("overflow");
+$rs=mysql_query("select * from que where status=0");
+	while($r=mysql_fetch_array($rs)){
+            ?>
+			<table class="table table-responsive">
+<tr>
+<td 
+>
+<div>
+
+<a href="cc.php?code=<?php echo $r[2] ; ?>"><?php echo $r[3] ; ?></a>
+ </div> 
+</td>
+<td>	
+
+
+<div style="margin-left:650; margin-top:0"><?php echo $r[4] ; ?>
+		<Button><a href="save.php?code=<?php echo $r[2] ; ?>">save</a></Button>
+		
+</div>
+</td></tr>
+<?php
+$qcode=$r[2];
+	
+	$rs=mysql_query("select * from qcat where status=0 AND qcode='$qcode'");
+	while($r=mysql_fetch_array($rs)){
+
+?>
+<tr><td>
+<div class="badge">
+<a href="c.php?code=<?php echo $r[2] ; ?>" style="color:white"><?php echo $r[1]; ?></a>
+</div>
+
+</td></tr></table>
+<?php
+	}
+	
+?>
+	
+  <div class="row" style="height:28px ;  margin: 2px; background-color:#d9d9d9 ">
+<?php
+$code=$r[2];
+	$pq=mysql_query("select * from likeunlikeq where qcode='$code' AND status=0 AND likeq=1");
+	$xy=mysql_num_rows($pq);
+?>
+
+	<a href="like.php?code=<?php echo $r[2] ; ?>"><i class="glyphicon glyphicon-thumbs-up" style="margin-left: 30px; color:#595959"></i></a>
+ 	<?php
+echo $xy;
+?>
+<?php
+$code=$r[2];
+	$pq=mysql_query("select * from likeunlikeq where qcode='$code' AND status=0 AND unlikeq=1");
+	$xy=mysql_num_rows($pq);
+?>
+	<a href="unlikeque.php?code=<?php echo $r[2] ; ?>"><i class="glyphicon glyphicon-thumbs-down" style="margin-left: 35px; color:#595959"></i></a>
+ 	<?php
+echo $xy;
+	
+?>
+<i class="glyphicon glyphicon-eye-open" style="margin-left: 270px; color:#595959"></i>
+
+	<?php
+echo $r[7];
+?>
+
+
+<a href="cc.php?code=<?php echo $r[2] ; ?>"><i class="glyphicon glyphicon-comment" style="margin-left: 300px; color:#595959"></i></a>
+
+	<?php
+echo $r[8];
+?>
+
+</div>
+	
+	
+
+</div>
+  
+  </div>
+</div>
+  </div>
+  </div>
+
+			<?php
+	}
+			
+	
+		
+?>
+
+
+
+
+
+<?php
+$qcode=$r[2];
+	
+	$rs=mysql_query("select * from qcat where qcode='$qcode'");
+	while($r=mysql_fetch_array($rs)){
+
+?>
+<div class="badge">
+<a href="c.php?code=<?php echo $r[2] ; ?>" style="color:white"><?php echo $r[1]; ?></a>
+</div>
+<?php
+	}
+	
+?>
+	
+
+  </td>
+  <td><div style="margin-left:650; margin-top:0"><?php echo $r[4] ; ?>
+		<Button><a href="save.php?code=<?php echo $r[2] ; ?>">save</a></Button>
+		<Button><a href="share.php?code=<?php echo $r[2] ; ?>">share</a></Button>
+		
+</div>
+</td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html>
+
+	<head>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+		<link rel="stylesheet" href="bootstrap.min.css">
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+	body {
+  margin: 0;
+  font-family: "Lato", sans-serif;
+}
+
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
+ 
+.sidebar a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.sidebar a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+
+div.content {
+  margin-left: 200px;
+  padding: 1px 16px;
+  height: 1000px;
+}
+
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {float: left;}
+  div.content {margin-left: 0;}
+}
+
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
+</style>
+
+
+</head>
+	
+
+<body>
+<nav class="navbar navbar-inverse" style="background-color:black ; opacity:0.8">
+<div class="container-fluid">
+<div class="navbar-header" >
+	<a  class="navbar-brand" href="stgflow.php" style="float: left ; color:white">stgflow.com</a>
+	
+</div>
+ <ul class="nav navbar-nav">
+        <li class="active"  style="color:white"><a href="home.php">home</a></li>
+
+      </ul>
+<ul class="nav navbar-nav navbar-right">
+	<li><a href="reg.php" style="color:white" > registration</a></li>
+	<li><a href="login.php" style="color:white" > login</a></li>
+	
+	
+	</ul>
+	</div>
+	
+</nav>
+
+<div class="sidebar">
+
+  <a class="active" href="home.php">all Questions</a>
+  
+  
+  <a href="topq.php">top Questions</a>
+  <?php
+
+	mysql_connect("localhost","root","");
+	mysql_select_db("overflow");
+
+	$rs=mysql_query("select * from cat where status=0");
+	
+while($r=mysql_fetch_array($rs)){
+?>
+<a href="c.php?cat=<?php echo $r[2] ; ?>" ><?php echo $r[2] ; ?></a>
+<?php
+	}
+
+	 overflow:scroll
+	?>
+</div>
+
+<div class="container-fluid">
+
+<div class="row">
+
+<div class="col-sm-2">
+</div>
+
+<div class="col-sm-8">
+<form method="post" action="search1.php">
+<table  class="table table-responsive"><tr>
+<td><input type="text" class="form-control" name="que" placeholder="search question"><td><a class=" glyphicon glyphicon-search"></a></td></tr></table>
+</form>
+	
+
+<?php
+if(empty($_POST["ques"])){
+	header("location:home.php");
+}
+else{
+$ques=$_POST["ques"];
+	mysql_connect("localhost","root","");
+	mysql_select_db("overflow");
+$rs=mysql_query("select * from que where status=0  AND ques='$ques'");
+	if($r=mysql_fetch_array($rs)){
+            ?>
+			
+
+<table class="table table-responsive">
+<tr>
+<td 
+>
+<div>
+
+<a href="cc.php?code=<?php echo $r[2] ; ?>"><?php echo $r[3] ; ?></a>
+ </div> 
+
+
+<?php
+$qcode=$r[2];
+	
+	$rs=mysql_query("select * from qcat where qcode='$qcode'");
+	while($r=mysql_fetch_array($rs)){
+
+?>
+<div class="badge">
+<a href="c.php?code=<?php echo $r[2] ; ?>" style="color:white"><?php echo $r[1]; ?></a>
+</div>
+<?php
+	}
+	
+?>
+	
+<h3><a href="cc.php?code=<?php echo $r[2] ; ?>"><?php echo $r[3] ; ?></a></h3>  
+
+  </td>
+  <td><div style="margin-left:650; margin-top:0"><?php echo $r[4] ; ?>
+		<Button><a href="save.php?code=<?php echo $r[2] ; ?>">save</a></Button>
+		<Button><a href="share.php?code=<?php echo $r[2] ; ?>">share</a></Button>
+		
+</div>
+</td></tr></table>
+ 
+  <div class="row" style="height:28px ;  margin: 2px; background-color:#d9d9d9 ">
+<?php
+$code=$r[2];
+	$pq=mysql_query("select * from likeunlikeq where qcode='$code' AND status=0 AND likeq=1");
+	$xy=mysql_num_rows($pq);
+?>
+
+	<a href="like.php?code=<?php echo $r[2] ; ?>"><i class="glyphicon glyphicon-thumbs-up" style="margin-left: 30px; color:#595959"></i></a>
+ 	<?php
+echo $xy;
+?>
+<?php
+$code=$r[2];
+	$pq=mysql_query("select * from likeunlikeq where qcode='$code' AND status=0 AND unlikeq=1");
+	$xy=mysql_num_rows($pq);
+?>
+	<a href="unlikeque.php?code=<?php echo $r[2] ; ?>"><i class="glyphicon glyphicon-thumbs-down" style="margin-left: 35px; color:#595959"></i></a>
+ 	<?php
+echo $xy;
+	
+?>
+<i class="glyphicon glyphicon-eye-open" style="margin-left: 270px; color:#595959"></i>
+
+	<?php
+echo $r[7];
+?>
+
+
+<a href="cc.php?code=<?php echo $r[2] ; ?>"><i class="glyphicon glyphicon-comment" style="margin-left: 300px; color:#595959"></i></a>
+
+	<?php
+echo $r[8];
+?>
+
+</div>
+  
+</td>
+</div>
+  </div>
+  </div>
+
+			<?php
+	}
+}		
+	
+		
+?>
+</body>
+
+<?php
+
+	mysql_connect("localhost","root","");
+	mysql_select_db("overflow");
+	$cat=$_GET["cat"];
+	$pq=mysql_query("select * from qcat where cat='$cat'");
+
+	while($p=mysql_fetch_array($pq)){
+	$code=$p[2];
+$rs=mysql_query("select * from que where code='$code' AND status=0");
+	while($r=mysql_fetch_array($rs)){
+</html>
+
+
+
+
+<html>
+
+	<head>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+		<link rel="stylesheet" href="bootstrap.min.css">
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+	
+
+<body>
+
+<nav class="navbar navbar-inverse" style="background-color:black ; opacity:0.8">
+<div class="container-fluid">
+<div class="navbar-header" >
+	<a  class="navbar-brand" href="stgflow.php" style="float: left ; color:white">stgflow.com</a>
+	
+</div>
+ <ul class="nav navbar-nav">
+        <li class="active"  style="color:white"><a href="home.php">home</a></li>
+
+      </ul>
+<ul class="nav navbar-nav navbar-right">
+	<li><a href="reg.php" style="color:white" > registration</a></li>
+	<li><a href="login.php" style="color:white" > login</a></li>
+	
+	
+	</ul>
+	</div>
+	
+</nav>
+
+<div class="container-fluid">
+
+<div class="row">
+<div class="col-sm-3">					    
+
+	<div   class="panel panel-primary">
+	
+<div class="panel-heading">Daskboard</div>
+
+<div class="list-group panel-body" style="height: 540px">
+<a href="home.php" class="list-group-item list-group-item-action ">home</a>
+
+<?php
+
+	mysql_connect("localhost","root","");
+	mysql_select_db("overflow");
+
+	$rs=mysql_query("select * from cat where status=0");
+	
+while($r=mysql_fetch_array($rs)){
+?>
+<a href="c.php?cat=<?php echo $r[2] ; ?>" class="list-group-item list-group-item-action"><?php echo $r[2] ; ?></a>
+<?php
+	}
+?>
+
+
+</div>
+</div>
+</div>
+
+<div class="col-sm-8">
+
+	
+
+<?php
+
+	mysql_connect("localhost","root","");
+	mysql_select_db("overflow");
+	$cat=$_GET["cat"];
+	$pq=mysql_query("select * from qcat where cat='$cat'");
+
+	while($p=mysql_fetch_array($pq)){
+	$code=$p[2];
+$rs=mysql_query("select * from que where code='$code' AND status=0");
+	while($r=mysql_fetch_array($rs)){
+            ?>
+			
+
+<table class="table table-responsive">
+<div style="width: 780px;
+    border: 5px solid black ;
+    padding: 0px;
+    margin: 5px;"
+><br>
+
+		<Button style="margin-left: 665px"><a href="share.php?code=<?php echo $r[2] ; ?>">share</a></Button>
+		<Button><a href="save.php?code=<?php echo $r[2] ; ?>">save</a></Button>
+		<a href="home.php" style="color: black"><img src="<?php echo "upload/".$r[1].".jpg"; ?>" style="width: 50px; height: 50px;" class="img-responsive img-circle">
+
+<?php echo $r[11] ; ?>  </a>
+<h3><a href="cc.php?code=<?php echo $r[2] ; ?>"><?php echo $r[3] ; ?></a><br> </h3> 
+
+<div class="row" style="height:28px ;  margin: 2px; background-color:#DEDBDB">
+<i class="glyphicon glyphicon-thumbs-up" style="margin-left: 30px"></i>
+ 	<?php
+echo $r[6];
+?>
+<i class="glyphicon glyphicon-eye-open" style="margin-left: 300px"></i>
+
+	<?php
+echo $r[7];
+?>
+
+
+<a href="cc.php?code=<?php echo $r[2] ; ?>"><i class="glyphicon glyphicon-comment" style="margin-left: 300px"></i></a>
+
+	<?php
+echo $r[8];
+
+
+	}
+	}		
+	
+?>
+
+</div>
+  
+  </div>
+</div>
+  </div>
+  </div>
+
+			<?php
+		
+?>
+
+
+
+<div class="sidebar">
+
+  <a class="active" href="home.php">all Questions</a>
+  
+  <a href="home.php">top Questions</a>
+  <a href="topq.php">most viewed Questions</a>
+  <a href="topq.php">most replied Questions</a>
+  <select name="cat">
+  <option>php</option>
+   <option>php</option>
+    <option>php</option>
+  </select>
+  
+</div>
+

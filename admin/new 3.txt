@@ -1,0 +1,131 @@
+
+<?php
+   
+	if(!isset($_COOKIE["user"])){
+	header("location:login.php");
+}
+else{
+	$email=$_COOKIE["user"];
+
+
+	mysql_connect("localhost","root","");
+	mysql_select_db("overflow");
+	$rs=mysql_query("select * from admin where email='$email'");
+
+	if($r=mysql_fetch_array($rs)){
+	
+	?>
+<html>
+
+	<head>
+	
+
+
+		<link rel="stylesheet" href="bootstrap.min.css">
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+$("Button").click(function(){
+	var v=$(this).attr("id");
+	$.post("delete.php",{id:v},function(data){
+	$("#r"+v).fadeout(1000);
+	});
+});
+});
+</script>
+</head>
+	
+
+<body>
+
+<nav class="navbar navbar-inverse" style="background-color:black ; opacity:0.8">
+<div class="container-fluid">
+<div class="navbar-header" >
+	<a  class="navbar-brand" href="stgflow.php" style="float: left ; color:white">stgflow.com</a>
+	
+</div>
+ <ul class="nav navbar-nav">
+        <li class="active"  style="color:white"><a href="profile.php">admin-penal</a></li>
+
+      </ul>
+<ul class="nav navbar-nav navbar-right">
+
+	<li><a href="logout.php" style="color:white" > logout</a></li>
+	
+	</ul>
+	</div>
+	
+</nav>
+
+
+
+<div class="container-fluid">
+
+<div class="row">
+<div class="col-sm-3">					    
+
+	<div   class="panel panel-primary">
+	
+<div class="panel-heading">Daskboard</div>
+
+<div class="list-group panel-body" style="height: 540px">
+<a href="profile.php" class="list-group-item list-group-item-action active">admin-penal</a>
+
+<a href="user.php" class="list-group-item list-group-item-action">user</a>
+<a href="profile.php" class="list-group-item list-group-item-action">ex</a>
+
+</div>
+</div>
+</div>
+
+
+		  <div class="col-sm-8">
+			
+				<div class="panel panel-primary">
+					    <div class="panel-heading">add category</div>
+						<div class="panel-body">
+
+<form method="post" action="cat.php">
+categiry<input type="text"placeholder="enter category" class="form-control"  name="cat"required="required"><br>  
+<input type="submit"style="color:blue" value="submit"/>
+</form>
+</div>
+</div>		
+	
+	<?php
+	
+	
+		}
+		
+
+$rs=mysql_query("select * from cat where status=0");
+		while($r=mysql_fetch_array($rs)){
+			
+			
+		?>
+<table class="table table-responsive">
+					<tr><td><?php echo $r[0]; ?></td><td><?php echo $r[2]; ?></td>
+						<form method="post" action="edit.php">
+						
+ 								<input type="hidden" name="code" value="<?php echo $r[1] ; ?>" >
+ 								<input type="hidden" name="cat" value="<?php echo $r[2] ; ?>" >
+		<td><Button>edit</td></Button></form>
+					
+	<td><Button id="r<?php echo $r[0];?>">delete</Button></td>
+	
+						<form method="post" action="block.php">
+						
+ 								<input type="hidden" name="code" value="<?php echo $r[1] ; ?>" >
+	<td><Button id="r<?php echo $r[0];?>">block</Button></td></form></tr>
+
+					</table>
+		<?php
+		}	
+}
+
+?>

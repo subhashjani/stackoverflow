@@ -1,0 +1,115 @@
+<div class="col-sm-3">					    
+
+	<div   class="panel panel-primary">
+	
+<div class="panel-heading">Daskboard</div>
+
+<div class="list-group panel-body" style="height: 540px">
+<a href="home.php" class="list-group-item list-group-item-action active">home</a>
+<?php
+
+	mysql_connect("localhost","root","");
+	mysql_select_db("overflow");
+
+	$rs=mysql_query("select * from cat where status=0");
+	
+while($r=mysql_fetch_array($rs)){
+?>
+<a href="c.php?cat=<?php echo $r[2] ; ?>" class="list-group-item list-group-item-action"><?php echo $r[2] ; ?></a>
+<?php
+	}
+?>
+</div>
+</div>
+</div>
+
+
+
+
+
+	<div   class="panel panel-primary">
+	
+<div class="panel-heading">Daskboard</div>
+
+<div class="list-group panel-body" style="height: 540px">
+<a href="home.php" class="list-group-item list-group-item-action active">home</a>
+<?php
+
+	mysql_connect("localhost","root","");
+	mysql_select_db("overflow");
+
+	$rs=mysql_query("select * from cat where status=0");
+	
+while($r=mysql_fetch_array($rs)){
+?>
+<a href="c.php?cat=<?php echo $r[2] ; ?>" class="list-group-item list-group-item-action"><?php echo $r[2] ; ?></a>
+<?php
+	}
+?>
+</div>
+</div>
+
+
+
+		
+
+<table class="table table-responsive">
+<div style="width: 780px;
+    border: 5px solid black ;
+    padding: 0px;
+    margin: 5px;"
+>
+<div>
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+
+<div class="row" style="height:28px ;  margin: 2px; background-color:#DEDBDB">
+<?php
+$code=$r[2];
+	$pq=mysql_query("select * from likeunlikeq where qcode='$code' AND status=0 AND likeq=1");
+	$xy=mysql_num_rows($pq);
+?>
+
+	<a href="like.php?code=<?php echo $r[2] ; ?>"><i class="glyphicon glyphicon-thumbs-up" style="margin-left: 30px"></i></a>
+ 	<?php
+echo $xy;
+?>
+<?php
+$code=$r[2];
+	$pq=mysql_query("select * from likeunlikeq where qcode='$code' AND status=0 AND unlikeq=1");
+	$xy=mysql_num_rows($pq);
+?>
+	<a href="unlikeque.php?code=<?php echo $r[2] ; ?>"><i class="glyphicon glyphicon-thumbs-down" style="margin-left: 35px"></i></a>
+ 	<?php
+echo $xy;
+	
+?>
+<i class="glyphicon glyphicon-eye-open" style="margin-left: 270px"></i>
+
+	<?php
+echo $r[7];
+?>
+
+
+<a href="cc.php?code=<?php echo $r[2] ; ?>"><i class="glyphicon glyphicon-comment" style="margin-left: 300px"></i></a>
+
+	<?php
+echo $r[8];
+?>
+
+<form method="post" action="search2.php">
+<table  class="table table-responsive"><tr>
+<td><input type="text" class="form-control" name="ques" placeholder="search question ">
+</td></tr></table>
+</form>
